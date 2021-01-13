@@ -21,22 +21,35 @@ services:
       # Settle the ports for the entry points
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web-secure.address=:443"
+      - "--entrypoints.game=:20000-20010"
+      - "--entrypoints.rcon=:20030-20040"
       # Settle the autentification method to http challenge
       - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge=true"
       - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge.entrypoint=web"
       # Uncomment this to get a fake certificate when testing
       #- "--certificatesresolvers.myhttpchallenge.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       # Settle letsencrypt as the certificate provider
-      - "--certificatesresolvers.myhttpchallenge.acme.email=me@mail.com"
+      - "--certificatesresolvers.myhttpchallenge.acme.email=info@spacepod.io"
       - "--certificatesresolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
       - "443:443"
       - "8080:8080"
+      - "20000-20010:20000-20010/udp"
+      - "20030-20040:20030-20040/tcp"
     networks:
       - "traefik"
+      - "web"
+      - "game"
     volumes:
       # Store certificates in ./letsencrypt/acme.json
       - "./letsencrypt:/letsencrypt"
       # Connect to Doker socket
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+networks:
+  traefik:
+    external: true
+  web:
+    external: true
+  game:
+    external: true
