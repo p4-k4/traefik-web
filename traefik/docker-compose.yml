@@ -21,8 +21,8 @@ services:
       # Settle the ports for the entry points
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web-secure.address=:443"
-      - "--entrypoints.game=:20000-20010"
-      - "--entrypoints.rcon=:20030-20040"
+      - "--entrypoints.game=:20000"
+      - "--entrypoints.rcon=:20030"
       # Settle the autentification method to http challenge
       - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge=true"
       - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge.entrypoint=web"
